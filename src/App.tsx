@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context';
 import { ProtectedRoute, Navbar } from './components';
-import { LoginPage, RegisterPage, DashboardPage, ExamPage, ResultPage } from './pages';
+import { LoginPage, RegisterPage, DashboardPage, ExamPage, ResultPage, ForgotPasswordPage, ProfilePage } from './pages';
 import { AdminLayout, AdminDashboardPage, QuestionBankPage, ExamManagementPage, UserManagementPage, DocumentImportPage } from './pages/admin';
 import './index.css';
 
@@ -17,6 +17,7 @@ function App() {
             {/* Public routes */}
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
             {/* Protected routes */}
             <Route element={<ProtectedRoute />}>
@@ -41,6 +42,7 @@ function App() {
                   </main>
                 </>
               } />
+              <Route path="/profile" element={<ProfilePage />} />
             </Route>
 
             {/* Admin routes */}

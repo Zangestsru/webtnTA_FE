@@ -110,9 +110,9 @@ export const LoginPage: React.FC = () => {
                             </div>
 
                             <div className="text-sm">
-                                <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
+                                <Link to="/forgot-password" className="font-medium text-blue-600 hover:text-blue-500">
                                     Quên mật khẩu?
-                                </a>
+                                </Link>
                             </div>
                         </div>
 

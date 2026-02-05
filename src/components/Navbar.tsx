@@ -36,6 +36,10 @@ export const Navbar: React.FC = () => {
                                     <span className="text-xs text-slate-500">{user?.email}</span>
                                 </div>
 
+                                <Link to="/profile">
+                                    <Button variant="ghost" size="sm">Hồ sơ</Button>
+                                </Link>
+
                                 {user?.role === 'Admin' && (
                                     <Link to="/admin">
                                         <Button variant="outline" size="sm">Quản trị</Button>

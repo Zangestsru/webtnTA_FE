@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context';
-import { Button, Input, Card } from '../../components';
+import { Button, Input, Card, Select } from '../../components';
+
+const GENDER_OPTIONS = [
+    { value: 'Male', label: 'Nam' },
+    { value: 'Female', label: 'Nữ' },
+    { value: 'Other', label: 'Khác' }
+];
 
 /**
- * Professional Register Page.
+ * Professional Register Page with gender and date of birth.
  */
 export const RegisterPage: React.FC = () => {
     const navigate = useNavigate();
@@ -13,6 +19,8 @@ export const RegisterPage: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [gender, setGender] = useState('');
+    const [dateOfBirth, setDateOfBirth] = useState('');
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
@@ -30,10 +38,20 @@ export const RegisterPage: React.FC = () => {
             return;
         }
 
+        if (!gender) {
+            setError('Vui lòng chọn giới tính');
+            return;
+        }
+
+        if (!dateOfBirth) {
+            setError('Vui lòng nhập ngày sinh');
+            return;
+        }
+
         setIsLoading(true);
 
         try {
-            await register({ username, email, password });
+            await register({ username, email, password, gender, dateOfBirth });
             navigate('/');
         } catch (err: unknown) {
             let errorMessage = 'Đăng ký thất bại';
@@ -107,6 +125,33 @@ export const RegisterPage: React.FC = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
+
+                        <div className="grid grid-cols-2 gap-4">
+                            <Select
+                                id="gender"
+                                label="Giới tính"
+                                options={GENDER_OPTIONS}
+                                value={gender}
+                                onChange={setGender}
+                                placeholder="Chọn giới tính"
+                                required
+                            />
+
+                            <div className="w-full">
+                                <label className="block text-sm font-medium text-slate-700 mb-1">
+                                    Ngày sinh
+                                </label>
+                                <input
+                                    id="dateOfBirth"
+                                    name="dateOfBirth"
+                                    type="date"
+                                    required
+                                    value={dateOfBirth}
+                                    onChange={(e) => setDateOfBirth(e.target.value)}
+                                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                />
+                            </div>
+                        </div>
 
                         <Input
                             id="password"
