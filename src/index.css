@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+/* 
+  Professional Design System - Quiz Platform 
+  Adhering to strict professional guidelines:
+  - No gradients
+  - No emojis
+  - Flat, solid colors
+  - High contrast and readability
+*/
+
+:root {
+  /* Brand Colors - Professional Blue/Navy */
+  --color-primary: #2563eb;
+  /* Blue 600 */
+  --color-primary-dark: #1d4ed8;
+  /* Blue 700 */
+  --color-secondary: #475569;
+  /* Slate 600 */
+
+  /* Status Colors (Flat) */
+  --color-success: #16a34a;
+  /* Green 600 */
+  --color-warning: #d97706;
+  /* Amber 600 */
+  --color-danger: #dc2626;
+  /* Red 600 */
+
+  /* Backgrounds */
+  --color-bg-body: #f8fafc;
+  /* Slate 50 */
+  --color-bg-surface: #ffffff;
+  /* White */
+  --color-bg-sidebar: #1e293b;
+  /* Slate 800 */
+
+  /* Text */
+  --color-text-main: #0f172a;
+  /* Slate 900 */
+  --color-text-muted: #64748b;
+  /* Slate 500 */
+  --color-text-inverse: #f8fafc;
+  /* Slate 50 */
+
+  /* Borders */
+  --color-border: #e2e8f0;
+  /* Slate 200 */
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 font-sans antialiased;
+  background-color: var(--color-bg-body);
+  color: var(--color-text-main);
+  min-height: 100vh;
+}
+
+/* Typography Overrides */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-semibold tracking-tight;
+  color: var(--color-text-main);
+}
+
+/* Professional Card - No Glassmorphism */
+.card-professional {
+  @apply bg-white border border-slate-200 rounded-lg shadow-sm;
+}
+
+/* Professional Input */
+.input-professional {
+  @apply bg-white border border-slate-300 rounded-md px-3 py-2 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors;
+}
+
+/* Scrollbar styling - Professional/Minimal */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-400 rounded-full hover:bg-slate-500;
+}
