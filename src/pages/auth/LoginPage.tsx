@@ -23,7 +23,7 @@ export const LoginPage: React.FC = () => {
             await login({ email, password });
             navigate('/');
         } catch (err: unknown) {
-            let errorMessage = 'Invalid credentials';
+            let errorMessage = 'Email hoặc mật khẩu không đúng';
             if (err && typeof err === 'object' && 'response' in err) {
                 const axiosError = err as { response?: { data?: { message?: string } } };
                 errorMessage = axiosError.response?.data?.message || errorMessage;

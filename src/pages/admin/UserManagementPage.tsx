@@ -17,7 +17,7 @@ export const UserManagementPage: React.FC = () => {
             const data = await adminService.getUsers();
             setUsers(data);
         } catch (error) {
-            console.error('Failed to load users:', error);
+            console.error('Không thể tải danh sách người dùng:', error);
         } finally {
             setIsLoading(false);
         }
@@ -42,7 +42,7 @@ export const UserManagementPage: React.FC = () => {
     };
 
     const handleDelete = async (id: string) => {
-        if (!window.confirm('Are you sure you want to delete this user? This action cannot be undone.')) return;
+        if (!window.confirm('Bạn có chắc chắn muốn xóa người dùng này? Hành động này không thể hoàn tác.')) return;
         try {
             await adminService.deleteUser(id);
             setUsers(users.filter(u => u.id !== id));
@@ -60,15 +60,15 @@ export const UserManagementPage: React.FC = () => {
         <div className="space-y-6">
             <div className="flex justify-between items-center">
                 <div>
-                    <h1 className="text-2xl font-bold text-slate-900">User Management</h1>
-                    <p className="text-slate-500">Manage users and roles</p>
+                    <h1 className="text-2xl font-bold text-slate-900">Quản lý người dùng</h1>
+                    <p className="text-slate-500">Quản lý người dùng và vai trò</p>
                 </div>
             </div>
 
             <Card padding="md">
                 <div className="flex gap-4 mb-6">
                     <Input
-                        placeholder="Search users..."
+                        placeholder="Tìm kiếm người dùng..."
                         value={filter}
                         onChange={(e) => setFilter(e.target.value)}
                         className="max-w-md"
@@ -76,16 +76,16 @@ export const UserManagementPage: React.FC = () => {
                 </div>
 
                 {isLoading ? (
-                    <div className="text-center py-12">Loading...</div>
+                    <div className="text-center py-12">Đang tải...</div>
                 ) : (
                     <div className="overflow-x-auto">
                         <table className="min-w-full divide-y divide-slate-200">
                             <thead className="bg-slate-50">
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">User</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Role</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
-                                    <th className="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">Actions</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Người dùng</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Vai trò</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Trạng thái</th>
+                                    <th className="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">Hành động</th>
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-slate-200">
@@ -108,8 +108,8 @@ export const UserManagementPage: React.FC = () => {
                                                 onChange={(e) => handleRoleChange(user.id, e.target.value)}
                                                 className="text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
                                             >
-                                                <option value="User">User</option>
-                                                <option value="Admin">Admin</option>
+                                                <option value="User">Người dùng</option>
+                                                <option value="Admin">Quản trị</option>
                                             </select>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
@@ -118,11 +118,11 @@ export const UserManagementPage: React.FC = () => {
                                                 className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full cursor-pointer ${user.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                                                     }`}
                                             >
-                                                {user.isActive ? 'Active' : 'Inactive'}
+                                                {user.isActive ? 'Hoạt động' : 'Khóa'}
                                             </button>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <button onClick={() => handleDelete(user.id)} className="text-red-600 hover:text-red-900">Delete</button>
+                                            <button onClick={() => handleDelete(user.id)} className="text-red-600 hover:text-red-900">Xóa</button>
                                         </td>
                                     </tr>
                                 ))}

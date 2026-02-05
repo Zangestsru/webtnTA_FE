@@ -28,7 +28,7 @@ export const ExamPage: React.FC = () => {
                 const expiredAt = new Date(data.expiredAt).getTime();
                 setTimeRemaining(Math.max(0, Math.floor((expiredAt - Date.now()) / 1000)));
             } catch (error) {
-                console.error('Failed to start exam:', error);
+                console.error('Không thể bắt đầu làm bài:', error);
                 navigate('/');
             } finally {
                 setIsLoading(false);
@@ -112,7 +112,7 @@ export const ExamPage: React.FC = () => {
             const result = await examService.submitExam(examData.attemptId, { answers: submitAnswers });
             navigate(`/result/${result.submissionId}`);
         } catch (error) {
-            console.error('Failed to submit exam:', error);
+            console.error('Không thể nộp bài:', error);
             setIsSubmitting(false);
         }
     }, [examData, answers, isSubmitting, navigate]);
@@ -135,9 +135,9 @@ export const ExamPage: React.FC = () => {
         return (
             <div className="min-h-screen flex items-center justify-center bg-slate-50">
                 <div className="text-center">
-                    <h2 className="text-xl font-bold text-slate-900 mb-2">No questions available</h2>
-                    <p className="text-slate-500 mb-4">This exam has no questions assigned.</p>
-                    <Button onClick={() => navigate('/')}>Go Back</Button>
+                    <h2 className="text-xl font-bold text-slate-900 mb-2">Không có câu hỏi</h2>
+                    <p className="text-slate-500 mb-4">Bài thi này chưa có câu hỏi nào.</p>
+                    <Button onClick={() => navigate('/')}>Quay lại</Button>
                 </div>
             </div>
         );
@@ -158,7 +158,7 @@ export const ExamPage: React.FC = () => {
             <header className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm h-16 flex items-center px-4 justify-between">
                 <div className="flex flex-col">
                     <h1 className="text-base font-bold text-slate-900 truncate max-w-md">{examData.title}</h1>
-                    <span className="text-xs text-slate-500">Attempt ID: {examData.attemptId.substring(0, 8)}...</span>
+                    <span className="text-xs text-slate-500">Mã bài làm: {examData.attemptId.substring(0, 8)}...</span>
                 </div>
                 <div className={`text-xl font-mono font-bold ${timeRemaining < 300 ? 'text-red-600' : 'text-slate-900'}`}>
                     {formatTime(timeRemaining)}
@@ -171,14 +171,14 @@ export const ExamPage: React.FC = () => {
                     <Card padding="lg">
                         <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
                             <div>
-                                <span className="text-sm font-medium text-slate-500 block uppercase tracking-wide">Question {currentQuestionIndex + 1}</span>
+                                <span className="text-sm font-medium text-slate-500 block uppercase tracking-wide">Câu hỏi {currentQuestionIndex + 1}</span>
                                 <div className="flex items-center gap-2 mt-1">
                                     <span className="bg-slate-100 text-slate-600 text-xs px-2 py-0.5 rounded-full font-medium">
-                                        {currentQuestion.score} Points
+                                        {currentQuestion.score} Điểm
                                     </span>
                                     {isMultiple && (
                                         <span className="bg-blue-50 text-blue-700 text-xs px-2 py-0.5 rounded-full font-medium">
-                                            Multiple Choice
+                                            Nhiều đáp án
                                         </span>
                                     )}
                                 </div>
@@ -190,7 +190,7 @@ export const ExamPage: React.FC = () => {
                                 className={markedForReview.has(currentQuestion.id) ? 'text-amber-600 bg-amber-50 hover:bg-amber-100' : 'text-slate-500'}
                             >
                                 <span className="mr-2">{markedForReview.has(currentQuestion.id) ? '★' : '☆'}</span>
-                                {markedForReview.has(currentQuestion.id) ? 'Marked' : 'Mark for Review'}
+                                {markedForReview.has(currentQuestion.id) ? 'Đã đánh dấu' : 'Đánh dấu'}
                             </Button>
                         </div>
 
@@ -234,7 +234,7 @@ export const ExamPage: React.FC = () => {
                             onClick={() => setCurrentQuestionIndex(prev => Math.max(0, prev - 1))}
                             disabled={currentQuestionIndex === 0}
                         >
-                            Previous
+                            Câu trước
                         </Button>
 
                         {currentQuestionIndex === examData.questions.length - 1 ? (
@@ -244,14 +244,14 @@ export const ExamPage: React.FC = () => {
                                 isLoading={isSubmitting}
                                 className="bg-green-600 hover:bg-green-700"
                             >
-                                Submit Exam
+                                Nộp bài
                             </Button>
                         ) : (
                             <Button
                                 variant="primary"
                                 onClick={() => setCurrentQuestionIndex(prev => Math.min(examData.questions.length - 1, prev + 1))}
                             >
-                                Next Question
+                                Câu tiếp theo
                             </Button>
                         )}
                     </div>
@@ -260,7 +260,7 @@ export const ExamPage: React.FC = () => {
                 {/* Sidebar Navigation */}
                 <div className="lg:col-span-1">
                     <Card padding="md" className="sticky top-24">
-                        <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide mb-4">Questions</h3>
+                        <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide mb-4">Câu hỏi</h3>
                         <div className="grid grid-cols-5 gap-2">
                             {examData.questions.map((q, idx) => {
                                 const isAnswered = answers.has(q.id);
@@ -286,16 +286,16 @@ export const ExamPage: React.FC = () => {
 
                         <div className="mt-6 space-y-2 text-xs text-slate-500">
                             <div className="flex items-center gap-2">
-                                <div className="w-3 h-3 rounded bg-blue-600"></div> <span>Current</span>
+                                <div className="w-3 h-3 rounded bg-blue-600"></div> <span>Câu hiện tại</span>
                             </div>
                             <div className="flex items-center gap-2">
-                                <div className="w-3 h-3 rounded bg-slate-800"></div> <span>Answered</span>
+                                <div className="w-3 h-3 rounded bg-slate-800"></div> <span>Đã trả lời</span>
                             </div>
                             <div className="flex items-center gap-2">
-                                <div className="w-3 h-3 rounded bg-amber-100 border border-amber-300"></div> <span>Marked</span>
+                                <div className="w-3 h-3 rounded bg-amber-100 border border-amber-300"></div> <span>Đã đánh dấu</span>
                             </div>
                             <div className="flex items-center gap-2">
-                                <div className="w-3 h-3 rounded bg-white border border-slate-200"></div> <span>Not Visited</span>
+                                <div className="w-3 h-3 rounded bg-white border border-slate-200"></div> <span>Chưa xem</span>
                             </div>
                         </div>
                     </Card>

@@ -40,7 +40,7 @@ export const AdminDashboardPage: React.FC = () => {
                 activeExams: exams.filter(e => e.isActive).length,
             });
         } catch (error) {
-            console.error('Failed to load dashboard stats:', error);
+            console.error('Không thể tải thống kê bảng điều khiển:', error);
         } finally {
             setIsLoading(false);
         }

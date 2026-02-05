@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context';
 import { ProtectedRoute, Navbar } from './components';
-import { LoginPage, RegisterPage, DashboardPage, ExamPage, ResultPage, ForgotPasswordPage, ProfilePage } from './pages';
+import { LoginPage, RegisterPage, DashboardPage, ExamPage, ResultPage, ForgotPasswordPage, ProfilePage, ExamHistoryPage, SubmissionDetailPage } from './pages';
 import { AdminLayout, AdminDashboardPage, QuestionBankPage, ExamManagementPage, UserManagementPage, DocumentImportPage } from './pages/admin';
 import './index.css';
 
@@ -43,6 +43,15 @@ function App() {
                 </>
               } />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/history" element={<ExamHistoryPage />} />
+              <Route path="/submission/:submissionId" element={
+                <>
+                  <Navbar />
+                  <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                    <SubmissionDetailPage />
+                  </main>
+                </>
+              } />
             </Route>
 
             {/* Admin routes */}

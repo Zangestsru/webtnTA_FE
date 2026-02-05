@@ -18,7 +18,7 @@ export const ResultPage: React.FC = () => {
                 const data = await examService.getResult(submissionId);
                 setResult(data);
             } catch (error) {
-                console.error('Failed to load result:', error);
+                console.error('Không thể tải kết quả:', error);
             } finally {
                 setIsLoading(false);
             }
@@ -37,8 +37,8 @@ export const ResultPage: React.FC = () => {
     if (!result) {
         return (
             <div className="text-center py-20 bg-white rounded-lg border border-slate-200">
-                <p className="text-slate-500">Result not found</p>
-                <Link to="/" className="mt-4 inline-block text-blue-600 hover:underline">Return to Dashboard</Link>
+                <p className="text-slate-500">Không tìm thấy kết quả</p>
+                <Link to="/" className="mt-4 inline-block text-blue-600 hover:underline">Quay về Trang chủ</Link>
             </div>
         );
     }
@@ -51,14 +51,14 @@ export const ResultPage: React.FC = () => {
             {/* Header / Score Summary */}
             <div className="bg-white border border-slate-200 rounded-lg p-8 text-center shadow-sm">
                 <h1 className="text-2xl font-bold text-slate-900 mb-2">{result.examTitle}</h1>
-                <p className="text-slate-500 mb-8">Submission Results</p>
+                <p className="text-slate-500 mb-8">Kết quả bài thi</p>
 
                 <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16">
                     <div className="text-center">
                         <div className={`text-6xl font-bold mb-2 ${isPassed ? 'text-green-600' : 'text-red-600'}`}>
                             {percentage}%
                         </div>
-                        <div className="text-sm font-medium uppercase tracking-wide text-slate-500">Total Score</div>
+                        <div className="text-sm font-medium uppercase tracking-wide text-slate-500">Tổng điểm</div>
                     </div>
 
                     <div className="h-12 w-px bg-slate-200 hidden md:block"></div>
@@ -66,26 +66,26 @@ export const ResultPage: React.FC = () => {
                     <div className="grid grid-cols-2 gap-x-12 gap-y-4 text-left">
                         <div>
                             <div className="text-2xl font-bold text-slate-900">{result.totalScore} / {result.maxScore}</div>
-                            <div className="text-xs text-slate-500 uppercase">Points</div>
+                            <div className="text-xs text-slate-500 uppercase">Điểm</div>
                         </div>
                         <div>
-                            <div className="text-2xl font-bold text-slate-900">{Math.floor(result.timeTaken / 60)}m</div>
-                            <div className="text-xs text-slate-500 uppercase">Time Taken</div>
+                            <div className="text-2xl font-bold text-slate-900">{Math.floor(result.timeTaken / 60)} phút</div>
+                            <div className="text-xs text-slate-500 uppercase">Thời gian</div>
                         </div>
                         <div>
                             <div className="text-2xl font-bold text-green-600">{result.questions?.filter(q => q.isCorrect).length || 0}</div>
-                            <div className="text-xs text-slate-500 uppercase">Correct</div>
+                            <div className="text-xs text-slate-500 uppercase">Đúng</div>
                         </div>
                         <div>
                             <div className="text-2xl font-bold text-red-600">{result.questions?.filter(q => !q.isCorrect).length || 0}</div>
-                            <div className="text-xs text-slate-500 uppercase">Incorrect</div>
+                            <div className="text-xs text-slate-500 uppercase">Sai</div>
                         </div>
                     </div>
                 </div>
 
                 <div className="mt-8 pt-8 border-t border-slate-100">
                     <Link to="/">
-                        <Button variant="primary">Back to Dashboard</Button>
+                        <Button variant="primary">Quay về Trang chủ</Button>
                     </Link>
                 </div>
             </div>
@@ -93,14 +93,14 @@ export const ResultPage: React.FC = () => {
             {/* Detailed Review */}
             {result.questions && result.questions.length > 0 && (
                 <div className="space-y-6">
-                    <h2 className="text-xl font-bold text-slate-900">Detailed Review</h2>
+                    <h2 className="text-xl font-bold text-slate-900">Chỉnh sửa chi tiết</h2>
                     {result.questions.map((question, index) => (
                         <Card key={question.id} padding="lg" className={`border-l-4 ${question.isCorrect ? 'border-l-green-500' : 'border-l-red-500'}`}>
                             <div className="flex items-start justify-between mb-4">
-                                <span className="text-sm font-medium text-slate-500">Question {index + 1}</span>
+                                <span className="text-sm font-medium text-slate-500">Câu hỏi {index + 1}</span>
                                 <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${question.isCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                                     }`}>
-                                    {question.isCorrect ? 'Correct' : 'Incorrect'}
+                                    {question.isCorrect ? 'Đúng' : 'Sai'}
                                 </span>
                             </div>
 
@@ -151,7 +151,7 @@ export const ResultPage: React.FC = () => {
 
                             {question.explanation && (
                                 <div className="mt-4 p-4 bg-blue-50 border-l-4 border-blue-500 rounded-r-md">
-                                    <h4 className="text-sm font-bold text-blue-900 mb-1">Explanation</h4>
+                                    <h4 className="text-sm font-bold text-blue-900 mb-1">Giải thích</h4>
                                     <p className="text-sm text-blue-800">{question.explanation}</p>
                                 </div>
                             )}
