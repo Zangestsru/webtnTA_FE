@@ -47,10 +47,10 @@ export const AdminDashboardPage: React.FC = () => {
     };
 
     const statCards = [
-        { label: 'Total Questions', value: stats.totalQuestions, link: '/admin/questions', color: 'bg-blue-500' },
-        { label: 'Total Exams', value: stats.totalExams, link: '/admin/exams', color: 'bg-green-500' },
-        { label: 'Active Exams', value: stats.activeExams, link: '/admin/exams', color: 'bg-amber-500' },
-        { label: 'Total Users', value: stats.totalUsers, link: '/admin/users', color: 'bg-purple-500' },
+        { label: 'Tổng câu hỏi', value: stats.totalQuestions, link: '/admin/questions', color: 'bg-blue-500' },
+        { label: 'Tổng bài thi', value: stats.totalExams, link: '/admin/exams', color: 'bg-green-500' },
+        { label: 'Bài thi đang mở', value: stats.activeExams, link: '/admin/exams', color: 'bg-amber-500' },
+        { label: 'Tổng người dùng', value: stats.totalUsers, link: '/admin/users', color: 'bg-purple-500' },
     ];
 
     if (isLoading) {
@@ -83,7 +83,7 @@ export const AdminDashboardPage: React.FC = () => {
 
             {/* Quick Actions */}
             <div>
-                <h2 className="text-xl font-bold text-slate-900 mb-4">Quick Actions</h2>
+                <h2 className="text-xl font-bold text-slate-900 mb-4">Thao tác nhanh</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <Link to="/admin/questions" className="block p-4 bg-white border border-slate-200 rounded-lg hover:shadow-md transition-shadow">
                         <div className="flex items-center gap-3">
@@ -93,8 +93,8 @@ export const AdminDashboardPage: React.FC = () => {
                                 </svg>
                             </div>
                             <div>
-                                <h3 className="font-medium text-slate-900">Add New Question</h3>
-                                <p className="text-sm text-slate-500">Create a quiz question</p>
+                                <h3 className="font-medium text-slate-900">Thêm câu hỏi</h3>
+                                <p className="text-sm text-slate-500">Tạo câu hỏi mới</p>
                             </div>
                         </div>
                     </Link>
@@ -107,8 +107,8 @@ export const AdminDashboardPage: React.FC = () => {
                                 </svg>
                             </div>
                             <div>
-                                <h3 className="font-medium text-slate-900">Create New Exam</h3>
-                                <p className="text-sm text-slate-500">Set up a new exam</p>
+                                <h3 className="font-medium text-slate-900">Tạo bài thi</h3>
+                                <p className="text-sm text-slate-500">Thiết lập bài thi mới</p>
                             </div>
                         </div>
                     </Link>
@@ -121,8 +121,8 @@ export const AdminDashboardPage: React.FC = () => {
                                 </svg>
                             </div>
                             <div>
-                                <h3 className="font-medium text-slate-900">Manage Users</h3>
-                                <p className="text-sm text-slate-500">View and manage users</p>
+                                <h3 className="font-medium text-slate-900">Quản lý người dùng</h3>
+                                <p className="text-sm text-slate-500">Xem và quản lý tài khoản</p>
                             </div>
                         </div>
                     </Link>

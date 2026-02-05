@@ -38,21 +38,21 @@ export const Navbar: React.FC = () => {
 
                                 {user?.role === 'Admin' && (
                                     <Link to="/admin">
-                                        <Button variant="outline" size="sm">Admin Panel</Button>
+                                        <Button variant="outline" size="sm">Quản trị</Button>
                                     </Link>
                                 )}
 
                                 <Button variant="ghost" size="sm" onClick={handleLogout}>
-                                    Sign Out
+                                    Đăng xuất
                                 </Button>
                             </>
                         ) : (
                             <div className="flex gap-3">
                                 <Link to="/login">
-                                    <Button variant="ghost" size="sm">Sign In</Button>
+                                    <Button variant="ghost" size="sm">Đăng nhập</Button>
                                 </Link>
                                 <Link to="/register">
-                                    <Button variant="primary" size="sm">Get Started</Button>
+                                    <Button variant="primary" size="sm">Đăng ký</Button>
                                 </Link>
                             </div>
                         )}
