@@ -40,16 +40,19 @@ export const LoginPage: React.FC = () => {
         <div className="min-h-screen flex items-center justify-center bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="w-full max-w-md space-y-8">
                 <div className="text-center">
-                    <div className="mx-auto h-12 w-12 bg-blue-600 rounded-md flex items-center justify-center">
-                        <span className="text-white font-bold text-2xl">Q</span>
+                    <div className="mx-auto h-16 w-16 bg-blue-600 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold text-2xl">E</span>
                     </div>
-                    <h2 className="mt-6 text-3xl font-bold tracking-tight text-slate-900">
-                        Sign in to take your quiz
+                    <h1 className="mt-4 text-2xl font-bold text-blue-600">
+                        Anh ngữ Ephata
+                    </h1>
+                    <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-900">
+                        Đăng nhập
                     </h2>
                     <p className="mt-2 text-sm text-slate-600">
-                        Or{' '}
+                        Hoặc{' '}
                         <Link to="/register" className="font-medium text-blue-600 hover:text-blue-500">
-                            create a new account
+                            tạo tài khoản mới
                         </Link>
                     </p>
                 </div>
@@ -77,7 +80,7 @@ export const LoginPage: React.FC = () => {
                             type="email"
                             autoComplete="email"
                             required
-                            label="Email address"
+                            label="Email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
@@ -88,7 +91,7 @@ export const LoginPage: React.FC = () => {
                             type="password"
                             autoComplete="current-password"
                             required
-                            label="Password"
+                            label="Mật khẩu"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
@@ -102,13 +105,13 @@ export const LoginPage: React.FC = () => {
                                     className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
                                 />
                                 <label htmlFor="remember-me" className="ml-2 block text-sm text-slate-900">
-                                    Remember me
+                                    Ghi nhớ đăng nhập
                                 </label>
                             </div>
 
                             <div className="text-sm">
                                 <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
-                                    Forgot your password?
+                                    Quên mật khẩu?
                                 </a>
                             </div>
                         </div>
@@ -119,7 +122,7 @@ export const LoginPage: React.FC = () => {
                             size="lg"
                             isLoading={isLoading}
                         >
-                            Sign in
+                            Đăng nhập
                         </Button>
                     </form>
                 </Card>

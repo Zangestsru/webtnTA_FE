@@ -21,12 +21,12 @@ export const RegisterPage: React.FC = () => {
         setError('');
 
         if (password !== confirmPassword) {
-            setError('Passwords do not match');
+            setError('Mật khẩu không khớp');
             return;
         }
 
         if (password.length < 6) {
-            setError('Password must be at least 6 characters');
+            setError('Mật khẩu phải có ít nhất 6 ký tự');
             return;
         }
 
@@ -36,7 +36,7 @@ export const RegisterPage: React.FC = () => {
             await register({ username, email, password });
             navigate('/');
         } catch (err: unknown) {
-            let errorMessage = 'Registration failed';
+            let errorMessage = 'Đăng ký thất bại';
             if (err && typeof err === 'object' && 'response' in err) {
                 const axiosError = err as { response?: { data?: { message?: string } } };
                 errorMessage = axiosError.response?.data?.message || errorMessage;
@@ -53,16 +53,19 @@ export const RegisterPage: React.FC = () => {
         <div className="min-h-screen flex items-center justify-center bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="w-full max-w-md space-y-8">
                 <div className="text-center">
-                    <div className="mx-auto h-12 w-12 bg-blue-600 rounded-md flex items-center justify-center">
-                        <span className="text-white font-bold text-2xl">Q</span>
+                    <div className="mx-auto h-16 w-16 bg-blue-600 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold text-2xl">E</span>
                     </div>
-                    <h2 className="mt-6 text-3xl font-bold tracking-tight text-slate-900">
-                        Create your account
+                    <h1 className="mt-4 text-2xl font-bold text-blue-600">
+                        Anh ngữ Ephata
+                    </h1>
+                    <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-900">
+                        Đăng ký tài khoản
                     </h2>
                     <p className="mt-2 text-sm text-slate-600">
-                        Already have an account?{' '}
+                        Đã có tài khoản?{' '}
                         <Link to="/login" className="font-medium text-blue-600 hover:text-blue-500">
-                            Sign in instead
+                            Đăng nhập ngay
                         </Link>
                     </p>
                 </div>
@@ -89,7 +92,7 @@ export const RegisterPage: React.FC = () => {
                             name="username"
                             type="text"
                             required
-                            label="Username"
+                            label="Tên người dùng"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                         />
@@ -100,7 +103,7 @@ export const RegisterPage: React.FC = () => {
                             type="email"
                             autoComplete="email"
                             required
-                            label="Email address"
+                            label="Email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
@@ -111,7 +114,7 @@ export const RegisterPage: React.FC = () => {
                             type="password"
                             autoComplete="new-password"
                             required
-                            label="Password"
+                            label="Mật khẩu"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
@@ -122,7 +125,7 @@ export const RegisterPage: React.FC = () => {
                             type="password"
                             autoComplete="new-password"
                             required
-                            label="Confirm Password"
+                            label="Xác nhận mật khẩu"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                         />
@@ -133,7 +136,7 @@ export const RegisterPage: React.FC = () => {
                             size="lg"
                             isLoading={isLoading}
                         >
-                            Sign Up
+                            Đăng ký
                         </Button>
                     </form>
                 </Card>
