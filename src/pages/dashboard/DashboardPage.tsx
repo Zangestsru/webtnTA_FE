@@ -2,16 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context';
 import { examService, type ExamListDto, type ExamResultDto } from '../../services';
-import { Button, Card } from '../../components';
+import { Button, Card, Input } from '../../components';
 
 /**
  * Professional Dashboard Page.
+ * Features:
+ * - Display available exams with search/filter
+ * - Show statistics (total exams, average score, last score)
+ * - Recent activity history
+ * - Search exams by title or description
  */
 export const DashboardPage: React.FC = () => {
     const { } = useAuth();
     const [exams, setExams] = useState<ExamListDto[]>([]);
+    const [filteredExams, setFilteredExams] = useState<ExamListDto[]>([]);
     const [history, setHistory] = useState<ExamResultDto[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         const loadData = async () => {
@@ -21,6 +28,7 @@ export const DashboardPage: React.FC = () => {
                     examService.getHistory()
                 ]);
                 setExams(examsData);
+                setFilteredExams(examsData);
                 setHistory(historyData);
             } catch (error) {
                 console.error('Failed to load dashboard data:', error);
@@ -30,6 +38,26 @@ export const DashboardPage: React.FC = () => {
         };
         loadData();
     }, []);
+
+    // Filter exams based on search query
+    useEffect(() => {
+        if (!searchQuery.trim()) {
+            setFilteredExams(exams);
+            return;
+        }
+
+        const query = searchQuery.toLowerCase();
+        const filtered = exams.filter(exam => {
+            const matchTitle = exam.title.toLowerCase().includes(query);
+            const matchDescription = exam.description?.toLowerCase().includes(query);
+            return matchTitle || matchDescription;
+        });
+        setFilteredExams(filtered);
+    }, [searchQuery, exams]);
+
+    const handleClearSearch = () => {
+        setSearchQuery('');
+    };
 
     const stats = {
         totalExams: history.length,
@@ -74,9 +102,47 @@ export const DashboardPage: React.FC = () => {
 
             {/* Available Exams */}
             <section>
-                <h2 className="text-xl font-bold text-slate-900 mb-6">Bài thi có sẵn</h2>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                    <h2 className="text-xl font-bold text-slate-900">Bài thi có sẵn</h2>
+                    
+                    {/* Search Bar */}
+                    <div className="flex-1 max-w-md">
+                        <div className="relative">
+                            <Input
+                                type="text"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                placeholder="Tìm kiếm bài thi..."
+                                className="w-full pr-20"
+                            />
+                            <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
+                                {searchQuery && (
+                                    <button
+                                        onClick={handleClearSearch}
+                                        className="p-1 text-gray-400 hover:text-gray-600 rounded transition-colors"
+                                        title="Xóa tìm kiếm"
+                                    >
+                                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                )}
+                                <svg className="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {searchQuery && (
+                    <div className="mb-4 text-sm text-gray-600">
+                        Tìm thấy <span className="font-semibold">{filteredExams.length}</span> kết quả cho "<span className="font-semibold">{searchQuery}</span>"
+                    </div>
+                )}
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {exams.map((exam) => (
+                    {filteredExams.map((exam) => (
                         <Card key={exam.id} hoverable className="flex flex-col h-full" padding="md">
                             <div className="flex-1">
                                 <h3 className="text-lg font-bold text-slate-900 mb-2">{exam.title}</h3>
@@ -101,9 +167,22 @@ export const DashboardPage: React.FC = () => {
                             </Link>
                         </Card>
                     ))}
-                    {exams.length === 0 && (
+                    {filteredExams.length === 0 && (
                         <div className="col-span-full py-12 text-center bg-white rounded-lg border border-dashed border-slate-300">
-                            <p className="text-slate-500">Chưa có bài thi nào.</p>
+                            <svg className="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <p className="text-slate-500">
+                                {searchQuery ? 'Không tìm thấy bài thi nào phù hợp.' : 'Chưa có bài thi nào.'}
+                            </p>
+                            {searchQuery && (
+                                <button
+                                    onClick={handleClearSearch}
+                                    className="mt-2 text-blue-600 hover:text-blue-800 text-sm font-medium"
+                                >
+                                    Xóa bộ lọc
+                                </button>
+                            )}
                         </div>
                     )}
                 </div>
