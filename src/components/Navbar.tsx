@@ -22,9 +22,9 @@ export const Navbar: React.FC = () => {
                     <div className="flex">
                         <Link to="/" className="flex-shrink-0 flex items-center gap-2">
                             <div className="w-8 h-8 bg-blue-600 rounded-md flex items-center justify-center">
-                                <span className="text-white font-bold text-lg">Q</span>
+                                <span className="text-white font-bold text-lg">E</span>
                             </div>
-                            <span className="text-xl font-bold text-slate-900">QuizPlatform</span>
+                            <span className="text-xl font-bold text-slate-900">Anh ngữ Ephata</span>
                         </Link>
                     </div>
 

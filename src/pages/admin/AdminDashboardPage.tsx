@@ -64,8 +64,8 @@ export const AdminDashboardPage: React.FC = () => {
     return (
         <div className="space-y-8">
             <div>
-                <h1 className="text-2xl font-bold text-slate-900">Admin Dashboard</h1>
-                <p className="text-slate-500">Overview of your quiz platform</p>
+                <h1 className="text-2xl font-bold text-slate-900">Bảng điều khiển Admin</h1>
+                <p className="text-slate-500">Tổng quan hệ thống Anh ngữ Ephata</p>
             </div>
 
             {/* Stats Grid */}
