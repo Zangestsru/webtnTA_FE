@@ -109,6 +109,7 @@ export const UserManagementPage: React.FC = () => {
                                                 className="text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
                                             >
                                                 <option value="User">Người dùng</option>
+                                                <option value="Teacher">Giáo viên</option>
                                                 <option value="Admin">Quản trị</option>
                                             </select>
                                         </td>

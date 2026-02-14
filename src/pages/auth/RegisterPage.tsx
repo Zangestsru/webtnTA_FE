@@ -9,6 +9,9 @@ const GENDER_OPTIONS = [
     { value: 'Other', label: 'Khác' }
 ];
 
+const EMAIL_REGEX = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+const USERNAME_REGEX = /^[a-zA-Z0-9._]{3,20}$/;
+
 /**
  * Professional Register Page with gender and date of birth.
  */
@@ -24,34 +27,72 @@ export const RegisterPage: React.FC = () => {
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setError('');
+    const validateForm = () => {
+        if (!USERNAME_REGEX.test(username.trim())) {
+            setError('Tên đăng nhập không hợp lệ (3-20 ký tự, chỉ chứa chữ, số, dấu chấm và gạch dưới)');
+            return false;
+        }
+
+        if (!EMAIL_REGEX.test(email.trim())) {
+            setError('Email không hợp lệ');
+            return false;
+        }
+
+        if (password.length <= 6) {
+            setError('Mật khẩu phải có hơn 6 ký tự');
+            return false;
+        }
 
         if (password !== confirmPassword) {
             setError('Mật khẩu không khớp');
-            return;
-        }
-
-        if (password.length < 6) {
-            setError('Mật khẩu phải có ít nhất 6 ký tự');
-            return;
+            return false;
         }
 
         if (!gender) {
             setError('Vui lòng chọn giới tính');
-            return;
+            return false;
         }
 
         if (!dateOfBirth) {
             setError('Vui lòng nhập ngày sinh');
+            return false;
+        }
+
+        // Validate age > 6
+        const birthDate = new Date(dateOfBirth);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+
+        if (age < 6) {
+            setError('Bạn phải trên 6 tuổi để đăng ký');
+            return false;
+        }
+
+        return true;
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError('');
+
+        if (!validateForm()) {
             return;
         }
 
         setIsLoading(true);
 
         try {
-            await register({ username, email, password, gender, dateOfBirth });
+            await register({
+                username: username.trim(),
+                email: email.trim(),
+                password,
+                gender,
+                dateOfBirth
+            });
             navigate('/');
         } catch (err: unknown) {
             let errorMessage = 'Đăng ký thất bại';

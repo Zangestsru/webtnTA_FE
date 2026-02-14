@@ -20,7 +20,7 @@ export const LoginPage: React.FC = () => {
         setIsLoading(true);
 
         try {
-            await login({ email, password });
+            await login({ email: email.trim(), password });
             navigate('/');
         } catch (err: unknown) {
             let errorMessage = 'Email hoặc mật khẩu không đúng';

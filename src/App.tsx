@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context';
 import { ProtectedRoute, Navbar } from './components';
 import { LoginPage, RegisterPage, DashboardPage, ExamPage, ResultPage, ForgotPasswordPage, ProfilePage, ExamHistoryPage, SubmissionDetailPage } from './pages';
-import { AdminLayout, AdminDashboardPage, QuestionBankPage, ExamManagementPage, UserManagementPage, DocumentImportPage } from './pages/admin';
+import { AdminLayout, AdminDashboardPage, QuestionBankPage, ExamManagementPage, UserManagementPage, DocumentImportPage, TeacherLayout } from './pages/admin';
 import './index.css';
 
 /**
@@ -54,7 +54,7 @@ function App() {
               } />
             </Route>
 
-            {/* Admin routes */}
+            {/* Admin routes — full access including User Management */}
             <Route path="/admin" element={
               <ProtectedRoute allowedRoles={['Admin']}>
                 <AdminLayout />
@@ -64,6 +64,18 @@ function App() {
               <Route path="questions" element={<QuestionBankPage />} />
               <Route path="exams" element={<ExamManagementPage />} />
               <Route path="users" element={<UserManagementPage />} />
+              <Route path="import" element={<DocumentImportPage />} />
+            </Route>
+
+            {/* Teacher routes — no User Management */}
+            <Route path="/teacher" element={
+              <ProtectedRoute allowedRoles={['Teacher']}>
+                <TeacherLayout />
+              </ProtectedRoute>
+            }>
+              <Route index element={<AdminDashboardPage />} />
+              <Route path="questions" element={<QuestionBankPage />} />
+              <Route path="exams" element={<ExamManagementPage />} />
               <Route path="import" element={<DocumentImportPage />} />
             </Route>
           </Routes>
